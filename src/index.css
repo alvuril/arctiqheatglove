@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #08080a;
+  --color-brand-dark: #0f1115;
+  --color-brand-card: #161920;
+  --color-brand-border: #232733;
+  --color-brand-ember: #ff4d00;
+  --color-brand-amber: #ff9900;
+  --color-brand-ice: #38bdf8;
+}
+
+@keyframes heatPulse {
+  0%, 100% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 8px #ff4d00);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 18px #ff1a00);
+  }
+}
+
+.heat-active {
+  animation: heatPulse 2s infinite ease-in-out;
+}
+
+.bg-grid-pattern {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arctiq | Engineered for the elements</title>
+    <meta name="description" content="Arctiq heated gloves engineered for the elements in Gothenburg, Sweden. Built with high-quality materials and PU-membrane weather defense." />
+    <meta property="og:title" content="Arctiq | Engineered for the elements" />
+    <meta property="og:description" content="Arctiq heated gloves engineered for the elements in Gothenburg, Sweden." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+      // Suppress harmless Vite HMR WebSocket connection errors in preview environment
+      window.addEventListener('error', function (event) {
+        var msg = (event && event.message) ? String(event.message) : '';
+        if (
+          msg.includes('WebSocket') ||
+          msg.includes('@vite/client') ||
+          msg.includes('createWebSocketModuleRunnerTransport') ||
+          msg.includes('Failed to construct')
+        ) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
+        }
+      }, true);
+      window.addEventListener('unhandledrejection', function (event) {
+        var reason = (event && event.reason) ? String(event.reason) : '';
+        if (
+          reason.includes('WebSocket') ||
+          reason.includes('@vite/client') ||
+          reason.includes('createWebSocketModuleRunnerTransport')
+        ) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
+        }
+      }, true);
+    </script>
+  </head>
+  <body class="bg-[#08080a] text-slate-200 antialiased selection:bg-[#ff4d00] selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

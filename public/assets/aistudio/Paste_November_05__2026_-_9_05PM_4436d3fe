@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCTIQ | HeatGlove™ — Smart Thermal Performance</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Space Grotesk & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#08080a',
+                            dark: '#0f1115',
+                            card: '#161920',
+                            border: '#232733',
+                            ember: '#ff4d00',
+                            amber: '#ff9900',
+                            ice: '#38bdf8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Pulse & Glow Effects for Heating Elements */
+        @keyframes heatPulse {
+            0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 8px #ff4500); }
+            50% { opacity: 1; filter: drop-shadow(0 0 18px #ff1a00); }
+        }
+        .heat-active {
+            animation: heatPulse 2s infinite ease-in-out;
+        }
+        .bg-grid-pattern {
+            background-size: 36px 36px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-brand-black text-gray-200 font-sans antialiased overflow-x-hidden selection:bg-brand-ember selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900 border-b border-white/10 text-xs py-2 text-center text-gray-400 tracking-wider uppercase font-medium">
+        <span>Sub-Zero Alpine Test Edition &bull; Free Global Expedited Shipping &bull; Lifetime Chassis Warranty</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-brand-black/80 border-b border-white/10 transition-all">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Logo (Recreated from image) -->
+            <a href="#" class="flex items-center gap-3 group">
+                <svg class="h-10 w-auto fill-white transition-transform group-hover:scale-105 duration-300" viewBox="0 0 320 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Mountain Crest Silhouette -->
+                    <path d="M160 5 L200 45 L180 48 L225 90 L170 90 L160 80 L150 90 L95 90 L140 48 L120 45 Z" fill="white"/>
+                    <path d="M160 5 L175 42 L160 55 L145 42 Z" fill="#08080a"/>
+                    <path d="M80 88 L140 32 L158 50 L125 88 Z" fill="white"/>
+                    <path d="M240 88 L180 32 L162 50 L195 88 Z" fill="white"/>
+                    <path d="M25 88 L85 45 L115 88 Z" fill="white"/>
+                    <path d="M295 88 L235 45 L205 88 Z" fill="white"/>
+                    <!-- Crisp Typography ARCTIQ -->
+                    <text x="160" y="132" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="700" font-size="38" letter-spacing="12" fill="white">ARCTIQ</text>
+                </svg>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-widest text-gray-400 uppercase">
+                <a href="#overview" class="hover:text-white transition-colors">Overview</a>
+                <a href="#technology" class="hover:text-white transition-colors">ThermoGrid™</a>
+                <a href="#specs" class="hover:text-white transition-colors">Tech Specs</a>
+                <a href="#reviews" class="hover:text-white transition-colors">Expedition Log</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="relative p-2.5 rounded-full border border-white/10 hover:border-white/30 bg-white/5 transition-colors">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                    </svg>
+                    <span id="cart-counter" class="absolute -top-1 -right-1 bg-brand-ember text-[10px] font-bold text-white w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <a href="#order" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 text-xs font-bold tracking-widest uppercase text-black bg-white hover:bg-gray-200 rounded transition duration-200">
+                    Order HeatGlove
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="relative min-h-[90vh] flex items-center justify-center pt-8 pb-20 bg-grid-pattern overflow-hidden">
+            <!-- Atmospheric Glows -->
+            <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-brand-ember/15 blur-[140px] pointer-events-none rounded-full"></div>
+            <div class="absolute bottom-0 right-10 w-[500px] h-[300px] bg-brand-ice/10 blur-[130px] pointer-events-none rounded-full"></div>
+
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Details -->
+                <div class="lg:col-span-6 space-y-6 text-center lg:text-left z-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm">
+                        <span class="w-2 h-2 rounded-full bg-brand-ember animate-ping"></span>
+                        <span class="text-xs font-semibold tracking-wider uppercase text-gray-300">Gen-3 Micro-Carbon Matrix</span>
+                    </div>
+
+                    <h1 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
+                        Master The <br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-300 to-neutral-500">Sub-Zero</span> Void.
+                    </h1>
+
+                    <p class="text-gray-400 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Engineered for polar endurance, extreme freeriding, and alpine mountaineering. The <strong>ARCTIQ HeatGlove™</strong> projects instant micro-current warmth to individual fingertips within 3.2 seconds.
+                    </p>
+
+                    <!-- Feature Badges -->
+                    <div class="grid grid-cols-3 gap-3 pt-2 max-w-md mx-auto lg:mx-0">
+                        <div class="p-3 rounded-lg border border-white/10 bg-brand-card/70 text-center">
+                            <span class="block text-2xl font-bold font-display text-white">55°C</span>
+                            <span class="text-[11px] text-gray-400 uppercase tracking-wider">Peak Thermal</span>
+                        </div>
+                        <div class="p-3 rounded-lg border border-white/10 bg-brand-card/70 text-center">
+                            <span class="block text-2xl font-bold font-display text-white">10.5h</span>
+                            <span class="text-[11px] text-gray-400 uppercase tracking-wider">Dual Core Cell</span>
+                        </div>
+                        <div class="p-3 rounded-lg border border-white/10 bg-brand-card/70 text-center">
+                            <span class="block text-2xl font-bold font-display text-white">IPX8</span>
+                            <span class="text-[11px] text-gray-400 uppercase tracking-wider">CryoSealed™</span>
+                        </div>
+                    </div>
+
+                    <!-- Call to action button -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
+                        <a href="#order" class="px-8 py-4 bg-brand-ember hover:bg-orange-600 text-white font-bold tracking-wider uppercase text-sm rounded shadow-lg shadow-brand-ember/25 transition-all text-center">
+                            Configure HeatGlove &mdash; $289
+                        </a>
+                        <a href="#interactive" class="px-8 py-4 border border-white/20 hover:border-white/40 bg-white/5 text-white font-semibold text-sm rounded transition-all text-center backdrop-blur-sm">
+                            Thermal Simulator
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Visual: Glove Blueprint / Product Display -->
+                <div class="lg:col-span-6 relative flex flex-col items-center justify-center">
+                    
+                    <!-- Glove Mockup Container -->
+                    <div class="relative w-full max-w-[440px] aspect-[4/5] bg-gradient-to-b from-brand-card to-brand-dark border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center shadow-2xl overflow-hidden group">
+                        
+                        <!-- Internal Heat Filaments (Vector glove with active filament simulation) -->
+                        <div class="relative w-full h-full flex items-center justify-center">
+                            <svg id="glove-svg" class="w-72 h-auto transition-all duration-700" viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Glove Outer Body Shell -->
+                                <path d="M50 170 C40 140 30 110 40 85 C45 75 56 75 60 88 C62 60 76 60 80 85 C84 50 98 50 102 85 C107 58 120 60 122 95 C125 110 135 125 155 140 C165 150 160 175 145 180 C135 184 130 175 128 170 L130 235 C130 245 60 245 60 235 L50 170 Z" 
+                                      fill="#12141a" stroke="#2a3040" stroke-width="3"/>
+                                
+                                <!-- Goatskin Palm Reinforcement Patch -->
+                                <path d="M65 150 C65 130 90 130 120 145 C125 170 115 195 95 195 C75 195 65 175 65 150 Z" 
+                                      fill="#1b1f28" stroke="#333b4d" stroke-width="1.5"/>
+
+                                <!-- Wrist Cuff Accent with ARCTIQ Brand -->
+                                <rect x="58" y="222" width="74" height="15" rx="3" fill="#08080a" stroke="#384152" stroke-width="1"/>
+                                <text x="95" y="233" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="700" letter-spacing="2">ARCTIQ</text>
+
+                                <!-- Heated Micro-Filament Paths (Dynamic Glow Target) -->
+                                <g id="heat-filaments" class="transition-all duration-500 stroke-[#384152]" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <!-- Pinky finger filament -->
+                                    <path d="M48 115 Q46 95 52 92 Q55 115 57 135" />
+                                    <!-- Ring finger filament -->
+                                    <path d="M68 110 Q66 76 72 75 Q75 110 77 132" />
+                                    <!-- Middle finger filament -->
+                                    <path d="M88 105 Q88 64 94 65 Q97 105 97 130" />
+                                    <!-- Index finger filament -->
+                                    <path d="M109 110 Q112 75 117 76 Q118 110 116 135" />
+                                    <!-- Thumb filament -->
+                                    <path d="M130 152 Q150 148 147 160 Q135 168 125 165" />
+                                    <!-- Central Palm Distribution Loop -->
+                                    <path d="M75 145 C80 165 110 165 115 145" />
+                                </g>
+
+                                <!-- Power / Status LED on Wrist -->
+                                <circle id="status-led" cx="95" cy="210" r="5" fill="#384152" class="transition-colors duration-300"/>
+                            </svg>
+                        </div>
+
+                        <!-- Real-time HUD Indicator -->
+                        <div class="w-full bg-brand-black/80 backdrop-blur-md rounded-xl p-3 border border-white/10 flex items-center justify-between text-xs mt-2 z-10">
+                            <div>
+                                <span class="text-gray-400 block text-[10px] uppercase">State</span>
+                                <span id="hud-status" class="font-bold text-white uppercase">Standby (0°C)</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 block text-[10px] uppercase">Runtime</span>
+                                <span id="hud-runtime" class="font-bold text-gray-300">--</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 block text-[10px] uppercase">Target Temp</span>
+                                <span id="hud-temp" class="font-bold text-brand-ice font-display text-sm">OFF</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- INTERACTIVE THERMAL CONTROLLER SECTION -->
+        <section id="interactive" class="py-20 bg-brand-dark border-y border-white/10">
+            <div class="max-w-5xl mx-auto px-6 text-center space-y-8">
+                <div>
+                    <h2 class="text-xs uppercase tracking-widest text-brand-ember font-bold">Interactive Module</h2>
+                    <p class="font-display text-3xl sm:text-4xl font-bold text-white mt-2">Test Drive The ThermoGrid™ Output</p>
+                    <p class="text-gray-400 text-sm max-w-lg mx-auto mt-2">Select a heating tier to simulate real-time carbon filament thermal emission on the HeatGlove.</p>
+                </div>
+
+                <!-- Heat Presets Buttons -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                    <button onclick="setHeatMode('off')" id="btn-off" class="mode-btn active p-4 rounded-xl border border-white/30 bg-white/10 text-left transition-all">
+                        <span class="block text-xs uppercase text-gray-400 font-medium">Mode 0</span>
+                        <span class="block text-lg font-bold text-white mt-1">Passive Off</span>
+                        <span class="block text-xs text-gray-400 mt-2">Primaloft gold only</span>
+                    </button>
+
+                    <button onclick="setHeatMode('eco')" id="btn-eco" class="mode-btn p-4 rounded-xl border border-white/10 bg-brand-card hover:border-brand-ice/50 text-left transition-all">
+                        <span class="block text-xs uppercase text-brand-ice font-medium">Mode 1 &bull; 35°C</span>
+                        <span class="block text-lg font-bold text-white mt-1">Alpine Eco</span>
+                        <span class="block text-xs text-gray-400 mt-2">10.5 hrs endurance</span>
+                    </button>
+
+                    <button onclick="setHeatMode('active')" id="btn-active" class="mode-btn p-4 rounded-xl border border-white/10 bg-brand-card hover:border-brand-amber/50 text-left transition-all">
+                        <span class="block text-xs uppercase text-brand-amber font-medium">Mode 2 &bull; 45°C</span>
+                        <span class="block text-lg font-bold text-white mt-1">Blizzard Run</span>
+                        <span class="block text-xs text-gray-400 mt-2">6.5 hrs high comfort</span>
+                    </button>
+
+                    <button onclick="setHeatMode('peak')" id="btn-peak" class="mode-btn p-4 rounded-xl border border-white/10 bg-brand-card hover:border-brand-ember/50 text-left transition-all">
+                        <span class="block text-xs uppercase text-brand-ember font-medium">Mode 3 &bull; 55°C</span>
+                        <span class="block text-lg font-bold text-white mt-1">Arctic Void</span>
+                        <span class="block text-xs text-gray-400 mt-2">3.5 hrs max thermal</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECHNOLOGY & ANATOMY SECTION -->
+        <section id="technology" class="py-24 max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-widest text-gray-400 font-semibold">Anatomy of Warmth</span>
+                <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-2">Engineered Without Compromise.</h2>
+                <p class="text-gray-400 text-sm mt-3">Every centimeter is optimized to isolate cold air, conduct warmth evenly, and sustain rugged abrasion on ice rock.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-8 rounded-2xl bg-brand-card border border-white/10 hover:border-white/20 transition group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-ember/15 flex items-center justify-center text-brand-ember mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-white mb-2">Omni-Tip Carbon Heating</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Unlike traditional heated gloves that terminate at the knuckles, ARCTIQ routes micro-thin filaments over fingernails down to the capillary beds where frostbite begins.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-8 rounded-2xl bg-brand-card border border-white/10 hover:border-white/20 transition group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-ice/15 flex items-center justify-center text-brand-ice mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-white mb-2">HydroShield™ 25,000mm</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Multi-layer hydrophobic barrier repels glacial spray, sleet, and slush while maintaining exceptional MVTR breathability to expel internal hand vapor.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-8 rounded-2xl bg-brand-card border border-white/10 hover:border-white/20 transition group">
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-white mb-2">Tactile ProTouch™</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Conductive silver-infused goat leather on the index finger and thumb provides fluid touchscreen control for GPS navigators, phones, and action cameras in sub-zero air.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIFICATIONS TABLE -->
+        <section id="specs" class="py-20 bg-brand-dark/50 border-t border-white/10">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-gray-400 font-semibold">Laboratory Specifications</span>
+                        <h2 class="text-3xl font-display font-bold text-white mt-1">Built For -40°C Extremes</h2>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2 md:mt-0 font-mono">MODEL: ARCTIQ-HG3 // REVISION 4.1</p>
+                </div>
+
+                <div class="border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/10 bg-brand-card text-sm">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 p-4 px-6 items-center">
+                        <span class="text-gray-400 font-medium">Insulation Grade</span>
+                        <span class="sm:col-span-2 text-white font-semibold">200g PrimaLoft® Gold Cross Core™ Aerogel</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 p-4 px-6 items-center">
+                        <span class="text-gray-400 font-medium">Battery Pack</span>
+                        <span class="sm:col-span-2 text-white font-semibold">Dual 7.4V 4200mAh Curved Li-Polymer (Swappable)</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 p-4 px-6 items-center">
+                        <span class="text-gray-400 font-medium">Shell Material</span>
+                        <span class="sm:col-span-2 text-white font-semibold">Cordura® 500D Ripstop with Pittards® Armor-Tan Goatskin Palm</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 p-4 px-6 items-center">
+                        <span class="text-gray-400 font-medium">Recharge Standard</span>
+                        <span class="sm:col-span-2 text-white font-semibold">USB-C Power Delivery (80% charge in 42 minutes)</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 p-4 px-6 items-center">
+                        <span class="text-gray-400 font-medium">Total Pair Weight</span>
+                        <span class="sm:col-span-2 text-white font-semibold">348 grams (including battery modules)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ORDER CONFIGURATOR SECTION -->
+        <section id="order" class="py-24 max-w-7xl mx-auto px-6">
+            <div class="bg-gradient-to-br from-brand-card via-brand-dark to-brand-black border border-white/15 rounded-3xl p-8 lg:p-14 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    
+                    <!-- Left: Glove Image Showcase -->
+                    <div class="lg:col-span-7 flex flex-col items-center justify-center p-8 bg-black/40 rounded-2xl border border-white/10 relative">
+                        <div class="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 rounded-full text-xs text-gray-300">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> In Stock & Ready To Dispatch
+                        </div>
+
+                        <!-- Product Display Badge -->
+                        <div class="text-center my-8">
+                            <h3 class="text-4xl font-display font-extrabold text-white tracking-wide">ARCTIQ HEATGLOVE™</h3>
+                            <p class="text-gray-400 text-sm mt-1">Alpine Performance Heated Glove System</p>
+                        </div>
+
+                        <div class="w-64 h-64 flex items-center justify-center">
+                            <svg class="w-52 h-auto fill-current text-white/90 drop-shadow-[0_20px_35px_rgba(0,0,0,0.8)]" viewBox="0 0 200 260">
+                                <path d="M50 170 C40 140 30 110 40 85 C45 75 56 75 60 88 C62 60 76 60 80 85 C84 50 98 50 102 85 C107 58 120 60 122 95 C125 110 135 125 155 140 C165 150 160 175 145 180 C135 184 130 175 128 170 L130 235 C130 245 60 245 60 235 L50 170 Z" fill="#1e2330"/>
+                                <path d="M65 150 C65 130 90 130 120 145 C125 170 115 195 95 195 C75 195 65 175 65 150 Z" fill="#2d3548"/>
+                                <rect x="58" y="222" width="74" height="15" rx="3" fill="#08080a"/>
+                                <text x="95" y="233" text-anchor="middle" fill="#fff" font-size="7" font-weight="700" letter-spacing="2">ARCTIQ</text>
+                            </svg>
+                        </div>
+
+                        <p class="text-xs text-gray-500 mt-4 text-center">Package includes: 1 Pair HeatGloves, 2x QuantumCell Batteries, 1x Dual USB-C Fast Charger, Ripstop Carry Sac.</p>
+                    </div>
+
+                    <!-- Right: Customizer / Buy Box -->
+                    <div class="lg:col-span-5 flex flex-col justify-between space-y-8">
+                        <div>
+                            <div class="flex items-baseline justify-between mb-2">
+                                <span class="text-3xl font-display font-black text-white">$289.00</span>
+                                <span class="text-xs font-semibold text-gray-400 line-through">$349.00 MSRP</span>
+                            </div>
+                            <p class="text-xs text-brand-ice font-medium">Includes 30-Day Zero-Frost Money-Back Guarantee</p>
+                        </div>
+
+                        <!-- Color Selector -->
+                        <div class="space-y-3">
+                            <label class="text-xs uppercase tracking-wider text-gray-300 font-semibold block">Colorway</label>
+                            <div class="flex gap-3">
+                                <button class="px-4 py-2 rounded-lg border border-white/40 bg-white/10 text-xs font-medium text-white flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-neutral-900 border border-white/50"></span> Obsidian Black
+                                </button>
+                                <button class="px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-xs font-medium text-gray-400 hover:text-white flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-slate-300"></span> Glacier Camo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Size Selector -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <label class="uppercase tracking-wider text-gray-300 font-semibold">Select Size</label>
+                                <a href="#specs" class="text-brand-ice hover:underline">Sizing Guide</a>
+                            </div>
+                            <div class="grid grid-cols-4 gap-2.5">
+                                <button onclick="selectSize('S')" class="size-btn py-3 rounded-lg border border-white/10 text-xs font-bold hover:border-white/40 bg-white/5">S</button>
+                                <button onclick="selectSize('M')" class="size-btn py-3 rounded-lg border border-white/40 text-xs font-bold bg-white/20 text-white">M</button>
+                                <button onclick="selectSize('L')" class="size-btn py-3 rounded-lg border border-white/10 text-xs font-bold hover:border-white/40 bg-white/5">L</button>
+                                <button onclick="selectSize('XL')" class="size-btn py-3 rounded-lg border border-white/10 text-xs font-bold hover:border-white/40 bg-white/5">XL</button>
+                            </div>
+                        </div>
+
+                        <!-- Add to Cart CTA -->
+                        <div class="space-y-3 pt-4">
+                            <button onclick="addToCart()" class="w-full py-4 bg-brand-ember hover:bg-orange-600 text-white font-bold tracking-widest uppercase text-sm rounded shadow-lg shadow-brand-ember/30 transition duration-150">
+                                Add To Cart &bull; $289.00
+                            </button>
+                            <p class="text-[11px] text-gray-500 text-center flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                3-Year Alpine Hardware Warranty &bull; Free Global Returns
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATHLETE & EXPEDITION REVIEWS -->
+        <section id="reviews" class="py-20 max-w-7xl mx-auto px-6 border-t border-white/10">
+            <h2 class="text-xs uppercase tracking-widest text-center text-gray-400 font-semibold mb-12">Validated In The Harshest Climates</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 rounded-xl bg-brand-card/50 border border-white/5">
+                    <div class="text-amber-400 flex gap-1 mb-3 text-sm">★★★★★</div>
+                    <p class="text-sm text-gray-300 italic mb-4">"Guided a 7-day winter push on Denali. My clients with traditional down mitts were complaining daily; the Arctiq HeatGlove kept my hands nimble and warm at -35°C."</p>
+                    <div class="text-xs">
+                        <p class="font-bold text-white">Lukas Vance</p>
+                        <p class="text-gray-500">IFMGA Mountain Guide</p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-xl bg-brand-card/50 border border-white/5">
+                    <div class="text-amber-400 flex gap-1 mb-3 text-sm">★★★★★</div>
+                    <p class="text-sm text-gray-300 italic mb-4">"The finger filament coverage is unreal. You can actually pull off lens changes and camera drone battery swaps without your fingers freezing numb."</p>
+                    <div class="text-xs">
+                        <p class="font-bold text-white">Elena Rostova</p>
+                        <p class="text-gray-500">Arctic Landscape Photographer</p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-xl bg-brand-card/50 border border-white/5">
+                    <div class="text-amber-400 flex gap-1 mb-3 text-sm">★★★★★</div>
+                    <p class="text-sm text-gray-300 italic mb-4">"Battery life genuinely lasts all day on Eco mode. The magnetic wrist leash and goatskin grip make handling ice axes completely secure."</p>
+                    <div class="text-xs">
+                        <p class="font-bold text-white">Marcus Lindqvist</p>
+                        <p class="text-gray-500">Freeride World Tour Competitor</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark border-t border-white/10 py-16 text-gray-400 text-xs">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10">
+            <div>
+                <!-- Footer Mini Brand -->
+                <div class="mb-4">
+                    <span class="font-display font-bold text-lg text-white tracking-[0.25em]">ARCTIQ</span>
+                </div>
+                <p class="text-gray-500 text-xs leading-relaxed">
+                    Engineered thermal outerwear designed in Tromsø, Norway. Built for those who explore beyond zero.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold uppercase tracking-wider mb-3">Gear</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition">HeatGlove™ Pro</a></li>
+                    <li><a href="#" class="hover:text-white transition">Battery Systems</a></li>
+                    <li><a href="#" class="hover:text-white transition">PrimaLoft Base-layers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold uppercase tracking-wider mb-3">Expedition</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition">Alpine Field Reports</a></li>
+                    <li><a href="#" class="hover:text-white transition">Cold Room Testing</a></li>
+                    <li><a href="#" class="hover:text-white transition">Pro Program</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold uppercase tracking-wider mb-3">Guarantee</h4>
+                <p class="text-gray-500 leading-relaxed mb-3">Every HeatGlove includes lifetime alpine repair coverage and 30-day trial.</p>
+                <span class="text-gray-300 font-mono">SUPPORT@ARCTIQ-EXPEDITION.COM</span>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between text-gray-500 text-[11px]">
+            <p>&copy; 2025 ARCTIQ Outdoor Equipment Inc. All rights reserved.</p>
+            <p class="mt-2 sm:mt-0 font-mono">NORTH-COORDINATES: 69°39′07″N 18°57′12″E</p>
+        </div>
+    </footer>
+
+    <!-- SLIDE-OVER CART DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+        <!-- Backdrop -->
+        <div onclick="toggleCart()" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        
+        <!-- Panel -->
+        <div id="cart-panel" class="absolute top-0 right-0 h-full w-full max-w-md bg-brand-card border-l border-white/10 p-6 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 pointer-events-auto">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                    <h3 class="font-display font-bold text-lg text-white">Your Expedition Pack</h3>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-xl">&times;</button>
+                </div>
+                
+                <div id="cart-items" class="py-6 space-y-4">
+                    <p id="empty-cart-msg" class="text-gray-500 text-sm text-center py-10">Your pack is currently empty.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-4 space-y-4">
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Subtotal</span>
+                    <span id="cart-total" class="font-bold text-white">$0.00</span>
+                </div>
+                <button onclick="alert('Proceeding to encrypted alpine checkout...')" class="w-full py-4 bg-white text-black hover:bg-gray-200 font-bold tracking-wider uppercase text-xs rounded transition">
+                    Checkout Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT CONTROLLERS -->
+    <script>
+        // Heat Mode Simulator Logic
+        let activeMode = 'off';
+        const filaments = document.getElementById('heat-filaments');
+        const statusLed = document.getElementById('status-led');
+        const hudStatus = document.getElementById('hud-status');
+        const hudTemp = document.getElementById('hud-temp');
+        const hudRuntime = document.getElementById('hud-runtime');
+
+        function setHeatMode(mode) {
+            activeMode = mode;
+
+            // Reset buttons style
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('border-brand-ember', 'border-brand-amber', 'border-brand-ice', 'border-white/40', 'bg-white/15');
+                btn.classList.add('border-white/10', 'bg-brand-card');
+            });
+
+            // Target Active Button
+            const targetBtn = document.getElementById(`btn-${mode}`);
+            targetBtn.classList.remove('bg-brand-card');
+            targetBtn.classList.add('bg-white/15');
+
+            filaments.classList.remove('heat-active');
+
+            if(mode === 'off') {
+                targetBtn.classList.add('border-white/40');
+                filaments.setAttribute('stroke', '#384152');
+                statusLed.setAttribute('fill', '#384152');
+                hudStatus.textContent = 'Standby (Passive)';
+                hudTemp.textContent = 'OFF';
+                hudTemp.className = 'font-bold text-gray-500 font-display text-sm';
+                hudRuntime.textContent = 'Standby';
+            } 
+            else if(mode === 'eco') {
+                targetBtn.classList.add('border-brand-ice');
+                filaments.setAttribute('stroke', '#38bdf8');
+                statusLed.setAttribute('fill', '#38bdf8');
+                hudStatus.textContent = 'Alpine Eco Active';
+                hudTemp.textContent = '35°C / 95°F';
+                hudTemp.className = 'font-bold text-brand-ice font-display text-sm';
+                hudRuntime.textContent = '~ 10.5 Hours';
+                filaments.classList.add('heat-active');
+            } 
+            else if(mode === 'active') {
+                targetBtn.classList.add('border-brand-amber');
+                filaments.setAttribute('stroke', '#ff9900');
+                statusLed.setAttribute('fill', '#ff9900');
+                hudStatus.textContent = 'Storm Mode Active';
+                hudTemp.textContent = '45°C / 113°F';
+                hudTemp.className = 'font-bold text-brand-amber font-display text-sm';
+                hudRuntime.textContent = '~ 6.5 Hours';
+                filaments.classList.add('heat-active');
+            } 
+            else if(mode === 'peak') {
+                targetBtn.classList.add('border-brand-ember');
+                filaments.setAttribute('stroke', '#ff3300');
+                statusLed.setAttribute('fill', '#ff3300');
+                hudStatus.textContent = 'Arctic Void Max Output';
+                hudTemp.textContent = '55°C / 131°F';
+                hudTemp.className = 'font-bold text-brand-ember font-display text-sm';
+                hudRuntime.textContent = '~ 3.5 Hours';
+                filaments.classList.add('heat-active');
+            }
+        }
+
+        // Size Selector
+        let selectedSize = 'M';
+        function selectSize(size) {
+            selectedSize = size;
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.classList.remove('border-white/40', 'bg-white/20', 'text-white');
+                btn.classList.add('border-white/10', 'bg-white/5');
+            });
+            event.target.classList.add('border-white/40', 'bg-white/20', 'text-white');
+        }
+
+        // Cart State & Drawer Logic
+        let cart = [];
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartPanel = document.getElementById('cart-panel');
+        const cartCounter = document.getElementById('cart-counter');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+
+        function toggleCart() {
+            const isOpen = !cartDrawer.classList.contains('pointer-events-none');
+            if (isOpen) {
+                cartDrawer.classList.add('pointer-events-none', 'opacity-0');
+                cartPanel.classList.add('translate-x-full');
+            } else {
+                cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
+                cartPanel.classList.remove('translate-x-full');
+            }
+        }
+
+        function addToCart() {
+            cart.push({
+                name: 'ARCTIQ HeatGlove™',
+                size: selectedSize,
+                price: 289.00
+            });
+            renderCart();
+            toggleCart();
+        }
+
+        function renderCart() {
+            cartCounter.textContent = cart.length;
+            if(cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-sm text-center py-10">Your pack is currently empty.</p>';
+                cartTotal.textContent = '$0.00';
+                return;
+            }
+
+            let total = 0;
+            cartItems.innerHTML = '';
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center bg-black/30 p-3 rounded-lg border border-white/5';
+                div.innerHTML = `
+                    <div>
+                        <p class="font-bold text-sm text-white">${item.name}</p>
+                        <p class="text-xs text-gray-400">Size: ${item.size} &bull; Obsidian Black</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-sm font-bold text-white">$${item.price}</span>
+                        <button onclick="removeFromCart(${index})" class="block text-[10px] text-brand-ember hover:underline">Remove</button>
+                    </div>
+                `;
+                cartItems.appendChild(div);
+            });
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+    </script>
+</body>
+</html>

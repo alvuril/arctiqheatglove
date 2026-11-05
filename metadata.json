@@ -1,0 +1,6 @@
+{
+  "name": "Arctiq | Engineered for the elements",
+  "description": "Arctiq heated gloves engineered for harsh Nordic winter conditions. Designed in Gothenburg, Sweden.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
