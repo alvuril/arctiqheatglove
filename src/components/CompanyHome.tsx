@@ -45,7 +45,7 @@ export const CompanyHome: React.FC<CompanyHomeProps> = ({
             onClick={onNavigateToProduct}
             className="px-8 py-4 bg-white text-black hover:bg-slate-200 font-bold text-xs tracking-widest uppercase rounded-xl transition duration-150 flex items-center gap-2 cursor-pointer shadow-lg shadow-white/5"
           >
-            <span>Explore The HeatGlove &mdash; £109.99</span>
+            <span>Explore The HeatGlove &mdash; £159.99</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

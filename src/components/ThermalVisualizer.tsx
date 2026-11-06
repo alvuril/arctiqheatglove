@@ -6,22 +6,29 @@ interface ThermalVisualizerProps {
 }
 
 export const ThermalVisualizer: React.FC<ThermalVisualizerProps> = ({ maxTemp = 45 }) => {
-  const [temperature, setTemperature] = useState<number>(35);
+  const [temperature, setTemperature] = useState<number>(() => Math.min(35, maxTemp));
 
-  // Calculate battery runtime based on temperature (up to 10 hours at lowest, down to 4h at max 45°C)
+  // Automatically clamp temperature when switching between Adult (45°C) and Kids (40°C)
+  React.useEffect(() => {
+    if (temperature > maxTemp) {
+      setTemperature(maxTemp);
+    }
+  }, [maxTemp, temperature]);
+
+  // Calculate battery runtime based on temperature (up to 10 hours at lowest, down to 4h at maxTemp)
   const getBatteryRuntime = (temp: number) => {
-    // Formula scaling from 10.0 hours at 20°C down to 4.0 hours at 45°C
     const minTemp = 20;
-    const ratio = (temp - minTemp) / (maxTemp - minTemp);
+    const clamped = Math.min(temp, maxTemp);
+    const ratio = (clamped - minTemp) / (maxTemp - minTemp);
     const hours = 10.0 - ratio * 6.0;
-    return hours.toFixed(1);
+    return Math.max(4.0, Math.min(10.0, hours)).toFixed(1);
   };
 
   // Get heating mode descriptor
   const getModeLabel = (temp: number) => {
     if (temp <= 28) return { name: 'Eco Conservation Mode', color: 'text-sky-400', badge: 'bg-sky-500/10 border-sky-500/20 text-sky-300' };
-    if (temp <= 38) return { name: 'Balanced Nordic Comfort', color: 'text-amber-400', badge: 'bg-amber-500/10 border-amber-500/20 text-amber-300' };
-    return { name: 'Peak Arctic Thermal Output', color: 'text-orange-500', badge: 'bg-orange-500/15 border-orange-500/30 text-orange-400' };
+    if (temp < maxTemp) return { name: 'Balanced Nordic Comfort', color: 'text-amber-400', badge: 'bg-amber-500/10 border-amber-500/20 text-amber-300' };
+    return { name: `Peak Thermal Output (${maxTemp}°C Max)`, color: 'text-orange-500', badge: 'bg-orange-500/15 border-orange-500/30 text-orange-400' };
   };
 
   // Dynamic filament stroke color and glow effect
@@ -55,7 +62,7 @@ export const ThermalVisualizer: React.FC<ThermalVisualizerProps> = ({ maxTemp = 
           Inspect The Active Heating Elements
         </h2>
         <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-          Adjust the thermal slider to visualize micro-carbon filament heat emission and observe real-time battery endurance up to 45°C.
+          Adjust the thermal slider to visualize micro-carbon filament heat emission and observe real-time battery endurance up to {maxTemp}°C.
         </p>
       </div>
 
@@ -233,25 +240,29 @@ export const ThermalVisualizer: React.FC<ThermalVisualizerProps> = ({ maxTemp = 
 
             <div className="flex justify-between text-[10px] text-slate-400 font-mono">
               <span>20°C (Ambient)</span>
-              <span>28°C (Eco)</span>
-              <span>38°C (Standard)</span>
-              <span>45°C (Max Limit)</span>
+              <span>25°C (Eco)</span>
+              <span>{maxTemp === 40 ? '32°C' : '35°C'} (Standard)</span>
+              <span className="text-orange-400 font-semibold">{maxTemp}°C (Max Limit)</span>
             </div>
 
             {/* Quick Presets */}
             <div className="pt-2 flex gap-2">
-              {[25, 35, 45].map((t) => (
+              {[
+                { temp: 25, label: '25°C Eco' },
+                { temp: maxTemp === 40 ? 32 : 35, label: `${maxTemp === 40 ? 32 : 35}°C Balanced` },
+                { temp: maxTemp, label: `${maxTemp}°C Max` },
+              ].map((p) => (
                 <button
-                  key={t}
+                  key={p.label}
                   type="button"
-                  onClick={() => setTemperature(t)}
+                  onClick={() => setTemperature(p.temp)}
                   className={`flex-1 py-1.5 rounded-lg border text-xs font-medium transition-colors cursor-pointer ${
-                    temperature === t
-                      ? 'border-white bg-white text-black font-semibold'
+                    temperature === p.temp
+                      ? 'border-white bg-white text-black font-semibold shadow-sm'
                       : 'border-white/10 bg-white/5 text-slate-300 hover:text-white'
                   }`}
                 >
-                  {t === 25 ? '25°C Eco' : t === 35 ? '35°C Balanced' : '45°C Max'}
+                  {p.label}
                 </button>
               ))}
             </div>
